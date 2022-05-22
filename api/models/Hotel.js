@@ -1,5 +1,5 @@
-import moongoose from "moongoose";
-const Schema = mongoose.Schema();
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 const HotelSchema = new Schema({
     name: {
@@ -25,11 +25,15 @@ const HotelSchema = new Schema({
     photos:{
         type: [String],
     },
+    title:{
+        type: String,
+        required: true,
+    },
     desc:{
         type: String,
         required: true
     },
-    ratings:{
+    rating:{
         type: Number,
         min: 0,
         max: 5

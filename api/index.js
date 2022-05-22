@@ -17,7 +17,7 @@ const PORT = process.env.PORT
 const connect = async ()=>{
      try {
           await mongoose.connect(process.env.MONGODB);
-        } catch (error) {
+        } catch (error) { 
           throw error
         }
 };
@@ -27,11 +27,29 @@ mongoose.connection.on("disconnected", ()=>{
      console.log("mongDB disconnected!")
 })
  
+
 // niddlewares
+app.use(express.json())
+
+// routes middleware
 app.use("/api/auth", authRoute )
 app.use("/api/users", usersRoute)
 app.use("/api/hotels", hotelsRoute)
 app.use('/api/rooms', roomsRoute)
+
+// error handling 
+
+app.use((err,req,res,next) => { 
+     const errorStatus = err.status || 500;
+     const errorMessage = err.message || "SOmething went wrong";
+
+     return res.status(errorStatus).json({
+          success: false,
+          status: errorStatus,
+          message: errorMessage,
+          stack: err.stack, 
+     })
+})
 
 
 
