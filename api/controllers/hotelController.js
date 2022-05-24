@@ -10,7 +10,7 @@ export const createHotel = async (req, res) => {
         res.status(200).json(savedHotel);
     } catch(err) {
         next(err);     
-    }
+    } 
 }
 
 export const updateHotel = async (req, res)=>{
