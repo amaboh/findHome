@@ -1,0 +1,31 @@
+import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
+
+const RoomSchema = new Schema(
+{
+     tile: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    price: {
+        type: Number,
+        required: true,
+        unique: true
+    },
+    maxPeople: {
+        type: Number,
+        required: true
+    },
+    desc: {
+        type: String,
+        required: true
+    },
+    roomNumbers: [{number:Number, unavailableDates: {type: [Date]}}], 
+},
+{timestamps: true}
+)
+
+
+export default mongoose.model("Room", RoomSchema)
