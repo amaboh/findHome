@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
 import "./list.css"
+import SearchItem from '../../components/searchItem/SearchItem';
 
 const List = () => {
 
@@ -42,11 +43,11 @@ const List = () => {
                   ranges={date}
                 />)}
               </div>
-              <div className="lsI">
+              <div className="lsItem">
                 <label>Options</label>
                 <div className="lsOptions">
                     <div className="lsOptionItem">
-                      <span className="lsOptionText">
+                      <span className="lsOption Text">
                         Min price <small>per night</small>
                       </span>
                       <input type="number" className="lsOptionInput"/>
@@ -77,9 +78,15 @@ const List = () => {
                     </div>
                   </div>
             </div> 
-            <button >Search</button>
+            <button class="searchBtn">Search</button>
           </div> 
-          <div className="listResult"></div>
+          <div className="listResult">
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+          </div>
         </div>
       </div>
     </div>
