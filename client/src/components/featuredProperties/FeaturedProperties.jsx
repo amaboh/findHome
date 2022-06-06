@@ -1,58 +1,29 @@
 import React from 'react'
+import useFetch from '../../hooks/useFetch'
 import "./featuredProperties.css"
 
 const FeaturedProperties = () => {
+    const {data, loading, error} = useFetch("http://localhost:8800/api/hotels?featured=true&limit=4")
   return (
     <div className="fp">
-        <div className="fpItem">
-            <img src="https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1" 
-                alt="" 
-                className="fpImg"/>
-            <span className="fpName">Aparthotel Stare Maistro</span>
-            <span className="fpCity">Madrid</span>
-            <span className="fpPrice">Starting at $120</span>
-            <div className="fpRating">
-                <button>8.9</button>
-                <span>Excellent</span>
-            </div>
-        </div>
-        <div className="fpItem">
-            <img src="https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1" 
-                alt="" 
-                className="fpImg"/>
-            <span className="fpName">Aparthotel Stare Maistro</span>
-            <span className="fpCity">Barcelone</span>
-            <span className="fpPrice">Starting at $200</span>
-            <div className="fpRating">
-                <button>6.9</button>
-                <span>Great</span>
-            </div>
-        </div>
-        <div className="fpItem">
-            <img src="https://cf.bstatic.com/xdata/images/hotel/max1280x900/232902339.jpg?k=3947def526b8af0429568b44f9716e79667d640842c48de5e66fd2a8b776accd&o=&hp=1" 
-                alt="" 
-                className="fpImg"/>
-            <span className="fpName">Cabin in South Africa</span>
-            <span className="fpCity">Madrid</span>
-            <span className="fpPrice">Starting at $400</span>
-            <div className="fpRating">
-                <button>8.3</button>
-                <span>Excellent</span>
-            </div>
-        </div>
-        <div className="fpItem">
-            <img src="https://cf.bstatic.com/xdata/images/hotel/max1280x900/322658536.jpg?k=3fffe63a365fd0ccdc59210188e55188cdb7448b9ec1ddb71b0843172138ec07&o=&hp=1" 
-                alt="" 
-                className="fpImg"/>
-            <span className="fpName">Penthouse in London</span>
-            <span className="fpCity">Madrid</span>
-            <span className="fpPrice">Starting at $2000</span>
-            <div className="fpRating">
-                <button>8.6</button>
-                <span>Excellent</span>
-            </div>
-        </div>
-       
+        {loading ? 
+            "Loading..."
+            :<>{data.map(item=>(item.photos.length > 0 &&
+                <div className="fpItem" key={item._id}>
+                        <img src={item.photos[0]} 
+                            alt="" 
+                            className="fpImg "/>
+                        <span className="fpName">{item.name}</span>
+                        <span className="fpCity">{item.city}</span>
+                        <span className="fpPrice">Starting at ${item.cheapestPrice}</span>
+                        {item.rating && <div className="fpRating">
+                            <button>{item.rating}</button>
+                            <span>Excellent</span>
+                        </div>}
+                </div>
+            ))}
+                
+            </> } 
     </div>
   )
 }
