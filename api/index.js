@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoute from "./routes/auth.js"
 import usersRoute from "./routes/users.js"
@@ -33,6 +34,12 @@ mongoose.connection.on("disconnected", ()=>{
 // niddlewares
 app.use(express.json())
 app.use(cookieParser())
+app.use(
+     cors({
+       origin:"http://localhost:3000",
+       methods: "GET"
+     })
+   );
 
 // routes middleware
 app.use("/api/auth", authRoute )

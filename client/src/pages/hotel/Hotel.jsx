@@ -38,11 +38,12 @@ const Hotel = () => {
 
   const handleOpen=(i)=>{
     setSlideNumber(i);
+    console.log(i)
     setOpen(true)
   }
 
   const handleMove=(direction)=>{
-    let newSliderNumber; 
+    let newSliderNumber;  
 
     if(direction ==="l"){
       newSliderNumber = slideNumber === 0 ? 5  : slideNumber - 1;
@@ -86,7 +87,7 @@ const Hotel = () => {
                 <img 
                     onClick={()=>handleOpen(i)} 
                     src={photo.src} 
-                    alt="image room" 
+                    alt="" 
                     className="hotelImg"/>
               </div>
             ))}
