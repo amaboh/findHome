@@ -3,12 +3,12 @@ import useFetch from '../../hooks/useFetch'
 import "./featuredProperties.css"
 
 const FeaturedProperties = () => {
-    const {data, loading, error} = useFetch("http://localhost:8800/api/hotels?featured=true&limit=4")
+    const {data, loading } = useFetch("http://localhost:8800/api/hotels?featured=true&limit=4")
   return (
     <div className="fp">
         {loading ? 
             "Loading..."
-            :<>{data.map(item=>(item.photos.length > 0 &&
+            :<>{data.map(item=>(
                 <div className="fpItem" key={item._id}>
                         <img src={item.photos[0]} 
                             alt="" 
