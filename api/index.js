@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+// import bodyParser from "body-parser";
+
 import authRoute from "./routes/auth.js"
 import usersRoute from "./routes/users.js"
 import hotelsRoute from "./routes/hotels.js"
@@ -37,9 +39,11 @@ app.use(cookieParser())
 app.use(
      cors({
        origin:"http://localhost:3000",
-       methods: "GET"
+       methods: ["GET", "POST"]
      })
    );
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json())
 
 // routes middleware
 app.use("/api/auth", authRoute )

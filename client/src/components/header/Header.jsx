@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom"
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
 
 
 
@@ -53,6 +54,7 @@ const Header = ({type}) => {
         navigate('/hotels', {state: {destination, dates, options} });
     };
 
+    const {user} = useContext(AuthContext)
 
   return (
     <div className="header">
@@ -86,8 +88,8 @@ const Header = ({type}) => {
                 <p className="headerDesc">
                     Get rewarded for your travels - unlock instant savings of 10% or more with a free OuiHomes account
                 </p>
-                <button className="headerBtn">Sign in / Register</button>
-
+                {!user && <button className="headerBtn">Sign in / Register</button>}
+ 
 
                 <div className="headerSearch">
                     <div className="headerSearchItem">

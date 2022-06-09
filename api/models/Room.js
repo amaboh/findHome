@@ -7,12 +7,11 @@ const RoomSchema = new Schema(
     title: {
       type: String,
       required: true,
-      unique: true,
+      unique: false,
     },
     price: {
       type: Number,
       required: true,
-      unique: true,
     },
     maxPeople: {
       type: Number,

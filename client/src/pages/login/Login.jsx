@@ -1,7 +1,9 @@
-import { useState, useContext } from "react";
-import "./login.css";
-import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import "./login.css";
+
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -9,7 +11,9 @@ const Login = () => {
     password: undefined,
   });
 
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const {loading, error, dispatch } = useContext(AuthContext);
+  
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -19,19 +23,20 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
 
+
     try {
-      const res = await axios.post("/auth/login", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-    } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      const res = await axios.post("http://localhost:8800/api/auth/login", credentials);
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      navigate("/")
+    } catch(err) {
+      console.log(err.response.data)
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data});
     }
   };
 
-  console.log(user);
-
   return (
     <div className="login">
-      <div className="lContaine">
+      <div className="lContainer">
         <input
           type="text"
           placeholder="username"
@@ -46,7 +51,7 @@ const Login = () => {
           onChange={handleChange}
           className="lInput"
         />
-        <button onClick={handleClick} className="lButton">
+        <button disabled={loading} onClick={handleClick} className="lButton">
           Login
         </button>
         {error && <span>{error.message}</span>}

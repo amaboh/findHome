@@ -1,5 +1,8 @@
 
 import {useState, useContext} from "react"
+import { useLocation } from "react-router-dom"
+import {useNavigate} from "react-router-dom"
+
 import "./hotel.css"
 
 import Header from "../../components/header/Header"
@@ -8,22 +11,29 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons"
 import MailList from "../../components/mailList/MailList"
 import Footer from "../../components/footer/Footer"
-import { useLocation } from "react-router-dom"
 import useFetch from "../../hooks/useFetch"
 import { SearchContext } from "../../context/SearchContext"
+import { AuthContext } from "../../context/AuthContext"
+import Reserve from "../../components/reserve/Reserve"
 
 
 const Hotel = () => {
 
   const [slideNumber, setSlideNumber] = useState(0);  
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+
+
   const location = useLocation() //location id is used here extract the id and pass it to the useFetch hook 
-  console.log(location)
   const id = location.pathname.split("/")[2];
 
   const {data, loading,error} = useFetch(`http://localhost:8800/api/hotels/find/${id}`)
 
   const {dates, options} = useContext(SearchContext)
+  const {user} = useContext(AuthContext)
+  const navigate = useNavigate()
+
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
@@ -51,6 +61,15 @@ const Hotel = () => {
     }
     setSlideNumber(newSliderNumber)
   }
+
+  const handleClick =()=>{
+      if(user){
+           setOpenModal(true)
+      }else{
+        navigate("/login")
+      }
+  }
+
 
   return (
     <div> 
@@ -106,7 +125,7 @@ const Hotel = () => {
                   <h2>
                     <b>${days * data.cheapestPrice * options.room}</b> ({days} nights)
                   </h2>
-                  <button className="bookBtn">Reserve or book Now!</button>
+                  <button onClick={handleClick} className="bookBtn">Reserve or book Now!</button>
                 </div>
 
               </div>
@@ -115,6 +134,7 @@ const Hotel = () => {
           <Footer/>
           </div>)
     }
+    {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
     </div>
   )
 }
