@@ -26,6 +26,8 @@ export const updateHotel = async (req, res) => {
   }
 };
 
+
+
 export const deleteHotel = async (req, res) => {
   try {
     await Hotel.findByIdAndDelete(req.params.id);

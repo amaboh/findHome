@@ -8,13 +8,16 @@ import {
   deleteRoom,
   getRoom,
   getAllRooms,
+  updateRoomAvailability,
 } from "../controllers/roomController.js";
+
 
 // CREATE room
 router.post("/:hotelid", verifyAdmin, createRoom);
 
-// UPDATE room
+// UPDATE room 
 router.post("/:id", verifyAdmin, updateRoom);
+router.put("/availability/:id", updateRoomAvailability);
 
 // DELETE room
 router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
