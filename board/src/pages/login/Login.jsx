@@ -27,8 +27,16 @@ const Login = () => {
         "http://localhost:8800/api/auth/login",
         credentials
       );
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      navigate("/");
+
+      if (res.data.isAdmin){
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+        navigate("/");
+      }else{
+        dispatch({ 
+          type: "LOGIN_FAILURE",
+          payload: {message: "You are not allowed!"}
+        });
+      }   
     } catch (err) {
       console.log(err.response.data);
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
