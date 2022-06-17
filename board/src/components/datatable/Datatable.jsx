@@ -4,16 +4,18 @@ import { DataGrid } from "@mui/x-data-grid";
 import { userColumns, userRows } from "../../datatablesource";
 
 import { Link } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 const Datatable = () => {
-  const [data, setData] = useState(userRows);
-
+  // const [data, setData] = useState(userRows);
+  const {data, loading, error} = useFetch("http://localhost:8800/api/users");
+  console.log(error)
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    // setData(data.filter((item) => item.id !== id));
   };
   const actionColumn = [
-    {
+    {  
       field: "action",
       headerName: "Action",
       width: 200,
@@ -50,6 +52,7 @@ const Datatable = () => {
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
+        getRowId={(row) => row._id}
       />
     </div>
   );

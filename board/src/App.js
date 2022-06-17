@@ -78,7 +78,7 @@ function App() {
         <Route path="new" element={
           <ProtectedRoute>
             <New inputs={productInputs} title="Add New Product"/>
-          </ProtectedRoute>
+          </ProtectedRoute> 
         } />
       </Route>
       </Route>
